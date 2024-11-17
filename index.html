@@ -396,156 +396,12 @@
 
 
 
-<!-- Children Count -->
-<div class="form-group">
-    <label for="sons-above-12-select">عدد البنين فوق 12 سنة <span>*</span></label>
-    <select id="sons-above-12-select" name="sons-above-12" required>
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-</div>
 
-<!-- Container for dynamically generated inputs -->
-<div id="sons-above-12-inputs" class="form-group"></div>
-<script>
-    const selectElement = document.getElementById("sons-above-12-select");
-    const a = document.getElementById("sons-above-12-inputs");
-
-    // Add an event listener for changes to the select dropdown
-    selectElement.addEventListener("change", (event) => {
-        const selectedValue = parseInt(event.target.value, 10);
-
-        // Clear previous inputs
-        a.innerHTML = "";
-
-        // Generate new inputs based on the selected value
-        for (let i = 1; i <= selectedValue; i++) {
-            const inputWrapper = document.createElement("div");
-            inputWrapper.className = "form-group";
-
-            // Create Name Label and Input
-            const nameLabel = document.createElement("label");
-            nameLabel.innerText = `اسم الابن ${i} ثلاثي`;
-            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const input = document.createElement("input");
-            input.type = "text";
-            input.name = `son-${i}-name`;
-            input.required = true;
-            input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Create Passport Label and Input
-            const passportLabel = document.createElement("label");
-            passportLabel.innerText = `رقم جواز السفر ${i}`;
-            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const passportInput = document.createElement("input");
-            passportInput.type = "text";
-            passportInput.name = `son-${i}-id`;
-            passportInput.required = true;
-            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Create Date of Birth Label and Input
-            const dateLabel = document.createElement("label");
-            dateLabel.innerText = `تاريخ الميلاد ${i}`;
-            dateLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const dataOfBirth = document.createElement("input");
-            dataOfBirth.type = "date";
-            dataOfBirth.name = `son-${i}-dob`;
-            dataOfBirth.required = true;
-            dataOfBirth.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Append all elements to the inputWrapper
-            inputWrapper.appendChild(nameLabel);
-            inputWrapper.appendChild(input);
-            inputWrapper.appendChild(passportLabel);
-            inputWrapper.appendChild(passportInput);
-            inputWrapper.appendChild(dateLabel);
-            inputWrapper.appendChild(dataOfBirth);
-
-            // Append inputWrapper to the container
-            sonsAbove12Inputs.appendChild(inputWrapper);
-        }
-    });
-</script>
-
-  <!-- Container for dynamically generated inputs -->
-  <div id="sons-above-12-inputs" class="form-group">
-  </div>
-
-
-  <script>
-    const S = document.getElementById("sons-above-12-options");
-    const sonsAbove12Inputs = document.getElementById("sons-above-12-inputs");
-
-    // Add an event listener for changes to the radio buttons
-    S.addEventListener("change", (event) => {
-        const selectedValue = parseInt(event.target.value, 10);
-
-        // Clear previous inputs
-        sonsAbove12Inputs.innerHTML = "";
-
-        // Generate new inputs based on the selected value
-        for (let i = 1; i <= selectedValue; i++) {
-            const inputWrapper = document.createElement("div");
-            inputWrapper.className = "form-group";
-
-            // Create Name Label and Input
-            const nameLabel = document.createElement("label");
-            nameLabel.innerText = `اسم الابن ${i} ثلاثي`;
-            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const input = document.createElement("input");
-            input.type = "text";
-            input.name = `son-${i}-name`;
-            input.required = true;
-            input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Create Passport Label and Input
-            const passportLabel = document.createElement("label");
-            passportLabel.innerText = `رقم جواز السفر ${i}`;
-            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const passportInput = document.createElement("input");
-            passportInput.type = "text";
-            passportInput.name = `son-${i}-id`;
-            passportInput.required = true;
-            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Create Date of Birth Label and Input
-            const dateLabel = document.createElement("label");
-            dateLabel.innerText = `تاريخ الميلاد ${i}`;
-            dateLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const dataOfBirth = document.createElement("input");
-            dataOfBirth.type = "date";
-            dataOfBirth.name = `son-${i}-dob`;
-            dataOfBirth.required = true;
-            dataOfBirth.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Append all elements to the inputWrapper
-            inputWrapper.appendChild(nameLabel);
-            inputWrapper.appendChild(input);
-            inputWrapper.appendChild(passportLabel);
-            inputWrapper.appendChild(passportInput);
-            inputWrapper.appendChild(dateLabel);
-            inputWrapper.appendChild(dataOfBirth);
-
-            // Append inputWrapper to the container
-            sonsAbove12Inputs.appendChild(inputWrapper);
-        }
-    });
-</script>
 
 
 <!-- Children Count -->
 <div class="form-group">
-    <label for="daughter-above-12-select">عدد البنات فوق 12 سنة <span>*</span></label>
+    <label for="daughter-above-12-select">عدد الابناء<span>*</span></label>
     <select id="daughter-above-12-select" name="daughter-above-12" required>
         <option value="0">0</option>
         <option value="1">1</option>
@@ -553,6 +409,11 @@
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
     </select>
 </div>
 
@@ -575,9 +436,9 @@
             const inputWrapper = document.createElement("div");
             inputWrapper.className = "form-group";
 
-            // Name Input
+            // First Name Input
             const nameLabel = document.createElement("label");
-            nameLabel.innerText = `اسم البنت ${i} ثلاثي`;
+            nameLabel.innerText = `الاسم  ${i}`;
             nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
 
             const nameInput = document.createElement("input");
@@ -586,16 +447,19 @@
             nameInput.required = true;
             nameInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
 
-            // Passport Input
-            const passportLabel = document.createElement("label");
-            passportLabel.innerText = `رقم جواز السفر ${i}`;
-            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+            // Gender Input
+            const genderLabel = document.createElement("label");
+            genderLabel.innerText = `الجنس ${i}`;
+            genderLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
 
-            const passportInput = document.createElement("input");
-            passportInput.type = "text";
-            passportInput.name = `daughter-${i}-passport`;
-            passportInput.required = true;
-            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+            const genderSelect = document.createElement("select");
+            genderSelect.name = `daughter-${i}-gender`;
+            genderSelect.required = true;
+            genderSelect.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+            const genderOption1 = new Option("أنثى", "female");
+            const genderOption2 = new Option("ذكر", "male");
+            genderSelect.add(genderOption1);
+            genderSelect.add(genderOption2);
 
             // Date of Birth Input
             const dobLabel = document.createElement("label");
@@ -608,13 +472,48 @@
             dobInput.required = true;
             dobInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
 
+            // Passport Input
+            const passportLabel = document.createElement("label");
+            passportLabel.innerText = `رقم جواز السفر ${i}`;
+            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const passportInput = document.createElement("input");
+            passportInput.type = "text";
+            passportInput.name = `daughter-${i}-passport`;
+            passportInput.required = true;
+            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Educational Stage Input
+            const educationLabel = document.createElement("label");
+            educationLabel.innerText = `المرحلة التعليمية ${i}`;
+            educationLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const educationSelect = document.createElement("select");
+            educationSelect.name = `daughter-${i}-education`;
+            educationSelect.required = true;
+            educationSelect.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+            const educationOption1 = new Option("ابتدائي", "primary");
+            const educationOption2 = new Option("إعدادي", "middle");
+            const educationOption3 = new Option("ثانوي", "high");
+            const educationOption4 = new Option("جامعي", "university");
+            const educationOption5 = new Option("أخرى", "other");
+            educationSelect.add(educationOption1);
+            educationSelect.add(educationOption2);
+            educationSelect.add(educationOption3);
+            educationSelect.add(educationOption4);
+            educationSelect.add(educationOption5);
+
             // Append all elements to the inputWrapper
             inputWrapper.appendChild(nameLabel);
             inputWrapper.appendChild(nameInput);
-            inputWrapper.appendChild(passportLabel);
-            inputWrapper.appendChild(passportInput);
+            inputWrapper.appendChild(genderLabel);
+            inputWrapper.appendChild(genderSelect);
             inputWrapper.appendChild(dobLabel);
             inputWrapper.appendChild(dobInput);
+            inputWrapper.appendChild(passportLabel);
+            inputWrapper.appendChild(passportInput);
+            inputWrapper.appendChild(educationLabel);
+            inputWrapper.appendChild(educationSelect);
 
             // Append inputWrapper to the container
             daughterInputsContainer.appendChild(inputWrapper);
@@ -623,166 +522,7 @@
 </script>
 
 
-<!-- Number of Boys Under 12 -->
-<div class="form-group">
-    <label for="random-boys-under-12-select">عدد البنين تحت 12 سنة <span>*</span></label>
-    <select id="random-boys-under-12-select" name="random-boys-under-12" required>
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-</div>
 
-<!-- Container for dynamically generated inputs -->
-<div id="random-boys-under-12-inputs" class="form-group"></div>
-
-<script>
-    const randomBoysSelect = document.getElementById("random-boys-under-12-select");
-    const randomBoysInputsContainer = document.getElementById("random-boys-under-12-inputs");
-
-    randomBoysSelect.addEventListener("change", (event) => {
-        const selectedValue = parseInt(event.target.value, 10);
-
-        // Clear previous inputs
-        randomBoysInputsContainer.innerHTML = "";
-
-        // Generate new inputs based on the selected value
-        for (let i = 1; i <= selectedValue; i++) {
-            const inputWrapper = document.createElement("div");
-            inputWrapper.className = "form-group";
-
-            // Name Input
-            const nameLabel = document.createElement("label");
-            nameLabel.innerText = `اسم الولد ${i} ثلاثي`;
-            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const nameInput = document.createElement("input");
-            nameInput.type = "text";
-            nameInput.name = `random-boy-${i}-name`;
-            nameInput.required = true;
-            nameInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Passport Input
-            const passportLabel = document.createElement("label");
-            passportLabel.innerText = `رقم جواز السفر ${i}`;
-            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const passportInput = document.createElement("input");
-            passportInput.type = "text";
-            passportInput.name = `random-boy-${i}-passport`;
-            passportInput.required = true;
-            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Date of Birth Input
-            const dobLabel = document.createElement("label");
-            dobLabel.innerText = `تاريخ الميلاد ${i}`;
-            dobLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const dobInput = document.createElement("input");
-            dobInput.type = "date";
-            dobInput.name = `random-boy-${i}-dob`;
-            dobInput.required = true;
-            dobInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Append elements to wrapper
-            inputWrapper.appendChild(nameLabel);
-            inputWrapper.appendChild(nameInput);
-            inputWrapper.appendChild(passportLabel);
-            inputWrapper.appendChild(passportInput);
-            inputWrapper.appendChild(dobLabel);
-            inputWrapper.appendChild(dobInput);
-
-            // Append wrapper to container
-            randomBoysInputsContainer.appendChild(inputWrapper);
-        }
-    });
-</script>
-
-
-  <!-- Number of Girls Under 12 -->
-<div class="form-group">
-    <label for="random-girls-under-12-select">عدد البنات تحت 12 سنة <span>*</span></label>
-    <select id="random-girls-under-12-select" name="random-girls-under-12" required>
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-</div>
-
-<!-- Container for dynamically generated inputs -->
-<div id="random-girls-under-12-inputs" class="form-group"></div>
-
-<script>
-    const randomGirlsSelect = document.getElementById("random-girls-under-12-select");
-    const randomGirlsInputsContainer = document.getElementById("random-girls-under-12-inputs");
-
-    randomGirlsSelect.addEventListener("change", (event) => {
-        const selectedValue = parseInt(event.target.value, 10);
-
-        // Clear previous inputs
-        randomGirlsInputsContainer.innerHTML = "";
-
-        // Generate new inputs based on the selected value
-        for (let i = 1; i <= selectedValue; i++) {
-            const inputWrapper = document.createElement("div");
-            inputWrapper.className = "form-group";
-
-            // Name Input
-            const nameLabel = document.createElement("label");
-            nameLabel.innerText = `اسم البنت ${i} ثلاثي`;
-            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const nameInput = document.createElement("input");
-            nameInput.type = "text";
-            nameInput.name = `random-girl-${i}-name`;
-            nameInput.required = true;
-            nameInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Passport Input
-            const passportLabel = document.createElement("label");
-            passportLabel.innerText = `رقم جواز السفر ${i}`;
-            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const passportInput = document.createElement("input");
-            passportInput.type = "text";
-            passportInput.name = `random-girl-${i}-passport`;
-            passportInput.required = true;
-            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Date of Birth Input
-            const dobLabel = document.createElement("label");
-            dobLabel.innerText = `تاريخ الميلاد ${i}`;
-            dobLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
-
-            const dobInput = document.createElement("input");
-            dobInput.type = "date";
-            dobInput.name = `random-girl-${i}-dob`;
-            dobInput.required = true;
-            dobInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
-
-            // Append elements to wrapper
-            inputWrapper.appendChild(nameLabel);
-            inputWrapper.appendChild(nameInput);
-            inputWrapper.appendChild(passportLabel);
-            inputWrapper.appendChild(passportInput);
-            inputWrapper.appendChild(dobLabel);
-            inputWrapper.appendChild(dobInput);
-
-            // Append wrapper to container
-            randomGirlsInputsContainer.appendChild(inputWrapper);
-        }
-    });
-</script>
-
-
-
-  
 
 
 
