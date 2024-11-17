@@ -149,11 +149,27 @@
         flex-direction: column;
       }
     }
+
+    /* Specifically target radio buttons */
+  input[type="radio"]:focus {
+    outline: none !important;
+  }
+  input:focus {
+    outline: none !important;
+  }
+  input:checked{
+    background-color: transparent !important;
+  }
   </style>
   
 </head>
 <body>
   <div class="form-container">
+     <!-- Logo -->
+     <div style="text-align: center; margin-bottom: 20px;">
+        <img width="50%" src="https://img.freepik.com/free-vector/colorful-bird-illustration-gradient_343694-1741.jpg?t=st=1731850149~exp=1731853749~hmac=570dd7af59a311d62f38751a48962c6bedb59b095cda89060b1b7663c2a5aa4e&w=1480" alt="Logo" style="max-width: 100%; height: auto;">
+    </div>
+
     <h1>نموذج بيانات الأسرة</h1>
     <form id="familyForm">
         <!-- Family Details -->
@@ -167,13 +183,13 @@
             <input type="text" id="family-head-id" name="family-head-id" placeholder="إجابتك" required>
         </div>
 
-        <!-- Passport -->
         <div class="form-group">
             <label for="passport-type">جواز السفر <span>*</span></label>
-            <div class="radio-group">
-                <label><input type="radio" name="passport-type" value="palestinian" onclick="handlePassportType('palestinian')" required> فلسطيني</label>
-                <label><input type="radio" name="passport-type" value="non-palestinian" onclick="handlePassportType('non-palestinian')"> غير فلسطيني</label>
-            </div>
+            <select id="passport-type" name="passport-type" onchange="handlePassportType(this.value)" required>
+                <option value="">اختر نوع جواز السفر</option>
+                <option value="palestinian">فلسطيني</option>
+                <option value="non-palestinian">غير فلسطيني</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -194,10 +210,11 @@
 
         <div class="form-group">
             <label for="wife-passport-type">جواز السفر للزوجة <span>*</span></label>
-            <div class="radio-group">
-                <label><input type="radio" name="wife-passport-type" value="palestinian" onclick="handleWifePassportType('palestinian')" required> فلسطيني</label>
-                <label><input type="radio" name="wife-passport-type" value="non-palestinian" onclick="handleWifePassportType('non-palestinian')"> غير فلسطيني</label>
-            </div>
+            <select id="wife-passport-type" name="wife-passport-type" onchange="handleWifePassportType(this.value)" required>
+                <option value="">اختر نوع جواز السفر</option>
+                <option value="palestinian">فلسطيني</option>
+                <option value="non-palestinian">غير فلسطيني</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -213,28 +230,31 @@
         <!-- Address -->
         <div class="form-group">
             <label for="governorate">العنوان في مصر (المحافظة) <span>*</span></label>
-            <div class="radio-group">
-              <label><input type="radio" name="governorate" value="القاهرة" required> القاهرة</label>
-              <label><input type="radio" name="governorate" value="6 أكتوبر"> 6 أكتوبر</label>
-              <label><input type="radio" name="governorate" value="الجيزة"> الجيزة</label>
-              <label><input type="radio" name="governorate" value="الإسكندرية"> الإسكندرية</label>
-              <label><input type="radio" name="governorate" value="الإسماعيلية"> الإسماعيلية</label>
-              <label><input type="radio" name="governorate" value="شمال سيناء"> شمال سيناء</label>
-              <label><input type="radio" name="governorate" value="بور سعيد"> بور سعيد</label>
-              <label><input type="radio" name="governorate" value="العريش"> العريش</label>
-              <label><input type="radio" name="governorate" value="أخرى"> أخرى</label>
-            </div>
-            <!-- Hidden input for "أخرى" -->
-            <div class="form-group" id="other-governorate-container" style="display: none; margin-top: 10px;">
-              <input
+            <select id="governorate" name="governorate" onchange="handleGovernorateChange(this.value)" required>
+                <option value="">اختر المحافظة</option>
+                <option value="القاهرة">القاهرة</option>
+                <option value="6 أكتوبر">6 أكتوبر</option>
+                <option value="الجيزة">الجيزة</option>
+                <option value="الإسكندرية">الإسكندرية</option>
+                <option value="الإسماعيلية">الإسماعيلية</option>
+                <option value="شمال سيناء">شمال سيناء</option>
+                <option value="بور سعيد">بور سعيد</option>
+                <option value="العريش">العريش</option>
+                <option value="أخرى">أخرى</option>
+            </select>
+        </div>
+        
+        <!-- Hidden input for "أخرى" -->
+        <div class="form-group" id="other-governorate-container" style="display: none; margin-top: 10px;">
+            <input
                 type="text"
                 id="other-governorate"
                 name="other-governorate"
                 placeholder="أدخل اسم المحافظة"
                 style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;"
-              />
-            </div>
-          </div>
+            />
+        </div>
+        
           
           <script>
             // Select all governorate radio buttons
@@ -263,16 +283,20 @@
             <label for="district">العنوان في مصر (الحي) <span>*</span></label>
             <input type="text" id="district" name="district" placeholder="مثال: خلف جنينة مول شارع ..." required>
         </div>
-
-       <!-- Additional Family Inputs -->
+<!-- Additional Family Inputs -->
 <div class="form-group">
-    <label for="provider-type">معيل الأسرة <span>*</span></label>
-    <select id="provider-type" name="provider-type" required>
-        <option value="">اختر معيل الأسرة</option>
-        <option value="husband">زوج</option>
-        <option value="wife">زوجة</option>
-        <option value="other">أخرى</option>
-    </select>
+    <label>معيل الأسرة <span>*</span></label>
+    <div id="provider-options" style="display: flex; gap: 20px; align-items: center;">
+        <label style="display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="provider-type" value="husband" required> زوج
+        </label>
+        <label style="display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="provider-type" value="wife"> زوجة
+        </label>
+        <label style="display: flex; align-items: center; gap: 5px;">
+            <input type="radio" name="provider-type" value="other"> أخرى
+        </label>
+    </div>
 </div>
 
 <div id="other-provider-info" style="display: none;">
@@ -288,8 +312,8 @@
 
 <script>
     // Handle provider type selection
-    document.getElementById("provider-type").addEventListener("change", function () {
-        const providerType = this.value;
+    document.getElementById("provider-options").addEventListener("change", function (event) {
+        const providerType = event.target.value;
         const otherInfoDiv = document.getElementById("other-provider-info");
 
         if (providerType === "other") {
@@ -366,19 +390,84 @@
 
 
 
-  <!-- Children Count -->
+<!-- Children Count -->
 <div class="form-group">
-    <label>عدد البنين فوق 12 سنة <span>*</span></label>
-    <div class="radio-group" id="sons-above-12-options">
-      <label><input type="radio" name="sons-above-12" value="0" required> 0</label>
-      <label><input type="radio" name="sons-above-12" value="1"> 1</label>
-      <label><input type="radio" name="sons-above-12" value="2"> 2</label>
-      <label><input type="radio" name="sons-above-12" value="3"> 3</label>
-      <label><input type="radio" name="sons-above-12" value="4"> 4</label>
-      <label><input type="radio" name="sons-above-12" value="5"> 5</label>
-    </div>
-  </div>
-  
+    <label for="sons-above-12-select">عدد البنين فوق 12 سنة <span>*</span></label>
+    <select id="sons-above-12-select" name="sons-above-12" required>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+</div>
+
+<!-- Container for dynamically generated inputs -->
+<div id="sons-above-12-inputs" class="form-group"></div>
+<script>
+    const selectElement = document.getElementById("sons-above-12-select");
+    const a = document.getElementById("sons-above-12-inputs");
+
+    // Add an event listener for changes to the select dropdown
+    selectElement.addEventListener("change", (event) => {
+        const selectedValue = parseInt(event.target.value, 10);
+
+        // Clear previous inputs
+        a.innerHTML = "";
+
+        // Generate new inputs based on the selected value
+        for (let i = 1; i <= selectedValue; i++) {
+            const inputWrapper = document.createElement("div");
+            inputWrapper.className = "form-group";
+
+            // Create Name Label and Input
+            const nameLabel = document.createElement("label");
+            nameLabel.innerText = `اسم الابن ${i} ثلاثي`;
+            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.name = `son-${i}-name`;
+            input.required = true;
+            input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Create Passport Label and Input
+            const passportLabel = document.createElement("label");
+            passportLabel.innerText = `رقم جواز السفر ${i}`;
+            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const passportInput = document.createElement("input");
+            passportInput.type = "text";
+            passportInput.name = `son-${i}-id`;
+            passportInput.required = true;
+            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Create Date of Birth Label and Input
+            const dateLabel = document.createElement("label");
+            dateLabel.innerText = `تاريخ الميلاد ${i}`;
+            dateLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const dataOfBirth = document.createElement("input");
+            dataOfBirth.type = "date";
+            dataOfBirth.name = `son-${i}-dob`;
+            dataOfBirth.required = true;
+            dataOfBirth.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Append all elements to the inputWrapper
+            inputWrapper.appendChild(nameLabel);
+            inputWrapper.appendChild(input);
+            inputWrapper.appendChild(passportLabel);
+            inputWrapper.appendChild(passportInput);
+            inputWrapper.appendChild(dateLabel);
+            inputWrapper.appendChild(dataOfBirth);
+
+            // Append inputWrapper to the container
+            sonsAbove12Inputs.appendChild(inputWrapper);
+        }
+    });
+</script>
+
   <!-- Container for dynamically generated inputs -->
   <div id="sons-above-12-inputs" class="form-group">
   </div>
@@ -387,210 +476,304 @@
   <script>
     const S = document.getElementById("sons-above-12-options");
     const sonsAbove12Inputs = document.getElementById("sons-above-12-inputs");
-  
+
     // Add an event listener for changes to the radio buttons
     S.addEventListener("change", (event) => {
-      const selectedValue = parseInt(event.target.value, 10);
-  
-      // Clear previous inputs
-      sonsAbove12Inputs.innerHTML = "";
-  
-      // Generate new inputs based on the selected value
-      for (let i = 1; i <= selectedValue; i++) {
-        const inputWrapper = document.createElement("div");
-        inputWrapper.className = "form-group";
-  
-        const input = document.createElement("input");
-        const passportInput = document.createElement("input");
+        const selectedValue = parseInt(event.target.value, 10);
 
-        input.type = "text";
-        input.name = `son-${i}-name`;
-        input.placeholder = `اسم الابن ${i} ثلاثي`;
-        input.required = true;
-        input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+        // Clear previous inputs
+        sonsAbove12Inputs.innerHTML = "";
 
-        passportInput.type = "text";
-        passportInput.name = `son-${i}-id`;
-        passportInput.placeholder = `رقم جواز السفر ${i}`;
-        passportInput.required = true;
-        passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px;";
-  
-        inputWrapper.appendChild(input);
-        inputWrapper.appendChild(passportInput);
-        sonsAbove12Inputs.appendChild(inputWrapper);
-      }
+        // Generate new inputs based on the selected value
+        for (let i = 1; i <= selectedValue; i++) {
+            const inputWrapper = document.createElement("div");
+            inputWrapper.className = "form-group";
+
+            // Create Name Label and Input
+            const nameLabel = document.createElement("label");
+            nameLabel.innerText = `اسم الابن ${i} ثلاثي`;
+            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.name = `son-${i}-name`;
+            input.required = true;
+            input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Create Passport Label and Input
+            const passportLabel = document.createElement("label");
+            passportLabel.innerText = `رقم جواز السفر ${i}`;
+            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const passportInput = document.createElement("input");
+            passportInput.type = "text";
+            passportInput.name = `son-${i}-id`;
+            passportInput.required = true;
+            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Create Date of Birth Label and Input
+            const dateLabel = document.createElement("label");
+            dateLabel.innerText = `تاريخ الميلاد ${i}`;
+            dateLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const dataOfBirth = document.createElement("input");
+            dataOfBirth.type = "date";
+            dataOfBirth.name = `son-${i}-dob`;
+            dataOfBirth.required = true;
+            dataOfBirth.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Append all elements to the inputWrapper
+            inputWrapper.appendChild(nameLabel);
+            inputWrapper.appendChild(input);
+            inputWrapper.appendChild(passportLabel);
+            inputWrapper.appendChild(passportInput);
+            inputWrapper.appendChild(dateLabel);
+            inputWrapper.appendChild(dataOfBirth);
+
+            // Append inputWrapper to the container
+            sonsAbove12Inputs.appendChild(inputWrapper);
+        }
     });
-  </script>
+</script>
 
 
 <!-- Children Count -->
 <div class="form-group">
-    <label>عدد البنات فوق 12 سنة <span>*</span></label>
-    <div class="radio-group" id="daughter-above-12-options">
-      <label><input type="radio" name="daugher-above-12" value="0" required> 0</label>
-      <label><input type="radio" name="daugher-above-12" value="1"> 1</label>
-      <label><input type="radio" name="daugher-above-12" value="2"> 2</label>
-      <label><input type="radio" name="daugher-above-12" value="3"> 3</label>
-      <label><input type="radio" name="daugher-above-12" value="4"> 4</label>
-      <label><input type="radio" name="daugher-above-12" value="5"> 5</label>
-    </div>
-  </div>
-  
-  <!-- Container for dynamically generated inputs -->
-  <div id="daughter-above-12-inputs" class="form-group">
-  </div>
+    <label for="daughter-above-12-select">عدد البنات فوق 12 سنة <span>*</span></label>
+    <select id="daughter-above-12-select" name="daughter-above-12" required>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+</div>
 
+<!-- Container for dynamically generated inputs -->
+<div id="daughter-above-12-inputs" class="form-group"></div>
 
-  <script>
-    const Daugher12 = document.getElementById("daughter-above-12-options");
-    const Daugter122 = document.getElementById("daughter-above-12-inputs");
-  
-    // Add an event listener for changes to the radio buttons
-    Daugher12.addEventListener("change", (event) => {
-      const selectedValue = parseInt(event.target.value, 10);
-  
-      // Clear previous inputs
-      Daugter122.innerHTML = "";
-  
-      // Generate new inputs based on the selected value
-      for (let i = 1; i <= selectedValue; i++) {
-        const inputWrapper = document.createElement("div");
-        inputWrapper.className = "form-group";
-  
-        const input = document.createElement("input");
-        const passportInput = document.createElement("input");
-        input.type = "text";
-        input.name = `son-${i}-name`;
-        input.placeholder = `اسم البنت ${i} ثلاثي`;
-        input.required = true;
-        input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+<script>
+    const daughterSelect = document.getElementById("daughter-above-12-select");
+    const daughterInputsContainer = document.getElementById("daughter-above-12-inputs");
 
-        passportInput.type = "text";
-        passportInput.name = `son-${i}-id`;
-        passportInput.placeholder = `رقم جواز السفر ${i}`;
-        passportInput.required = true;
-        passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px;";
-  
-        inputWrapper.appendChild(input);
-        inputWrapper.appendChild(passportInput);
-        Daugter122.appendChild(inputWrapper);
-      }
+    // Add an event listener for changes to the select dropdown
+    daughterSelect.addEventListener("change", (event) => {
+        const selectedValue = parseInt(event.target.value, 10);
+
+        // Clear previous inputs
+        daughterInputsContainer.innerHTML = "";
+
+        // Generate new inputs based on the selected value
+        for (let i = 1; i <= selectedValue; i++) {
+            const inputWrapper = document.createElement("div");
+            inputWrapper.className = "form-group";
+
+            // Name Input
+            const nameLabel = document.createElement("label");
+            nameLabel.innerText = `اسم البنت ${i} ثلاثي`;
+            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.name = `daughter-${i}-name`;
+            nameInput.required = true;
+            nameInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Passport Input
+            const passportLabel = document.createElement("label");
+            passportLabel.innerText = `رقم جواز السفر ${i}`;
+            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const passportInput = document.createElement("input");
+            passportInput.type = "text";
+            passportInput.name = `daughter-${i}-passport`;
+            passportInput.required = true;
+            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Date of Birth Input
+            const dobLabel = document.createElement("label");
+            dobLabel.innerText = `تاريخ الميلاد ${i}`;
+            dobLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const dobInput = document.createElement("input");
+            dobInput.type = "date";
+            dobInput.name = `daughter-${i}-dob`;
+            dobInput.required = true;
+            dobInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Append all elements to the inputWrapper
+            inputWrapper.appendChild(nameLabel);
+            inputWrapper.appendChild(nameInput);
+            inputWrapper.appendChild(passportLabel);
+            inputWrapper.appendChild(passportInput);
+            inputWrapper.appendChild(dobLabel);
+            inputWrapper.appendChild(dobInput);
+
+            // Append inputWrapper to the container
+            daughterInputsContainer.appendChild(inputWrapper);
+        }
     });
-  </script>
+</script>
 
 
+<!-- Number of Boys Under 12 -->
 <div class="form-group">
-    <label>عدد البنين تحت 12 سنة <span>*</span></label>
-    <div class="radio-group" id="daughter-under-12-options">
-      <label><input type="radio" name="daugher-under-12" value="0" required> 0</label>
-      <label><input type="radio" name="daugher-under-12" value="1"> 1</label>
-      <label><input type="radio" name="daugher-under-12" value="2"> 2</label>
-      <label><input type="radio" name="daugher-under-12" value="3"> 3</label>
-      <label><input type="radio" name="daugher-under-12" value="4"> 4</label>
-      <label><input type="radio" name="daugher-under-12" value="5"> 5</label>
-    </div>
-  </div>
-  
-  <!-- Container for dynamically generated inputs -->
-  <div id="daughter-under-12-inputs" class="form-group">
-  </div>
+    <label for="random-boys-under-12-select">عدد البنين تحت 12 سنة <span>*</span></label>
+    <select id="random-boys-under-12-select" name="random-boys-under-12" required>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+</div>
 
+<!-- Container for dynamically generated inputs -->
+<div id="random-boys-under-12-inputs" class="form-group"></div>
 
+<script>
+    const randomBoysSelect = document.getElementById("random-boys-under-12-select");
+    const randomBoysInputsContainer = document.getElementById("random-boys-under-12-inputs");
 
+    randomBoysSelect.addEventListener("change", (event) => {
+        const selectedValue = parseInt(event.target.value, 10);
 
-  <script>
-    const DaugherU12 = document.getElementById("daughter-under-12-options");
-    const under12Daugther = document.getElementById("daughter-under-12-inputs");
-  
-    // Add an event listener for changes to the radio buttons
-    DaugherU12.addEventListener("change", (event) => {
-      const selectedValue = parseInt(event.target.value, 10);
-  
-      // Clear previous inputs
-      under12Daugther.innerHTML = "";
-  
-      // Generate new inputs based on the selected value
-      for (let i = 1; i <= selectedValue; i++) {
-        const inputWrapper = document.createElement("div");
-        inputWrapper.className = "form-group";
-  
-        const input = document.createElement("input");
-        const passportInput = document.createElement("input");
-        input.type = "text";
-        input.name = `son-${i}-name`;
-        input.placeholder = `اسم الولد ${i} ثلاثي`;
-        input.required = true;
-        input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+        // Clear previous inputs
+        randomBoysInputsContainer.innerHTML = "";
 
-        passportInput.type = "text";
-        passportInput.name = `son-${i}-id`;
-        passportInput.placeholder = `رقم جواز السفر ${i}`;
-        passportInput.required = true;
-        passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px;";
-  
-        inputWrapper.appendChild(input);
-        inputWrapper.appendChild(passportInput);
-        under12Daugther.appendChild(inputWrapper);
-      }
+        // Generate new inputs based on the selected value
+        for (let i = 1; i <= selectedValue; i++) {
+            const inputWrapper = document.createElement("div");
+            inputWrapper.className = "form-group";
+
+            // Name Input
+            const nameLabel = document.createElement("label");
+            nameLabel.innerText = `اسم الولد ${i} ثلاثي`;
+            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.name = `random-boy-${i}-name`;
+            nameInput.required = true;
+            nameInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Passport Input
+            const passportLabel = document.createElement("label");
+            passportLabel.innerText = `رقم جواز السفر ${i}`;
+            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const passportInput = document.createElement("input");
+            passportInput.type = "text";
+            passportInput.name = `random-boy-${i}-passport`;
+            passportInput.required = true;
+            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Date of Birth Input
+            const dobLabel = document.createElement("label");
+            dobLabel.innerText = `تاريخ الميلاد ${i}`;
+            dobLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const dobInput = document.createElement("input");
+            dobInput.type = "date";
+            dobInput.name = `random-boy-${i}-dob`;
+            dobInput.required = true;
+            dobInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Append elements to wrapper
+            inputWrapper.appendChild(nameLabel);
+            inputWrapper.appendChild(nameInput);
+            inputWrapper.appendChild(passportLabel);
+            inputWrapper.appendChild(passportInput);
+            inputWrapper.appendChild(dobLabel);
+            inputWrapper.appendChild(dobInput);
+
+            // Append wrapper to container
+            randomBoysInputsContainer.appendChild(inputWrapper);
+        }
     });
-  </script>
+</script>
 
 
-  <div class="form-group">
-    <label>عدد البنات تحت 12 سنة <span>*</span></label>
-    <div class="radio-group" id="boy-under-12-options">
-      <label><input type="radio" name="boy-under-12" value="0" required> 0</label>
-      <label><input type="radio" name="boy-under-12" value="1"> 1</label>
-      <label><input type="radio" name="boy-under-12" value="2"> 2</label>
-      <label><input type="radio" name="boy-under-12" value="3"> 3</label>
-      <label><input type="radio" name="boy-under-12" value="4"> 4</label>
-      <label><input type="radio" name="boy-under-12" value="5"> 5</label>
-    </div>
-  </div>
-  
-  <!-- Container for dynamically generated inputs -->
-  <div id="boy-under-12-inputs" class="form-group">
-  </div>
+  <!-- Number of Girls Under 12 -->
+<div class="form-group">
+    <label for="random-girls-under-12-select">عدد البنات تحت 12 سنة <span>*</span></label>
+    <select id="random-girls-under-12-select" name="random-girls-under-12" required>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+</div>
 
+<!-- Container for dynamically generated inputs -->
+<div id="random-girls-under-12-inputs" class="form-group"></div>
 
-  <script>
-     const boyUnder = document.getElementById("boy-under-12-options");
-    const boy = document.getElementById("boy-under-12-inputs");
-  
-    // Add an event listener for changes to the radio buttons
-    boyUnder.addEventListener("change", (event) => {
-      const selectedValue = parseInt(event.target.value, 10);
-  
-      // Clear previous inputs
-      boy.innerHTML = "";
-  
-      // Generate new inputs based on the selected value
-      for (let i = 1; i <= selectedValue; i++) {
-        const inputWrapper = document.createElement("div");
-        inputWrapper.className = "form-group";
-  
-        const input = document.createElement("input");
-        const passportInput = document.createElement("input");
-        input.type = "text";
-        input.name = `son-${i}-name`;
-        input.placeholder = `اسم البنت ${i} ثلاثي`;
-        input.required = true;
-        input.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+<script>
+    const randomGirlsSelect = document.getElementById("random-girls-under-12-select");
+    const randomGirlsInputsContainer = document.getElementById("random-girls-under-12-inputs");
 
-        passportInput.type = "text";
-        passportInput.name = `son-${i}-id`;
-        passportInput.placeholder = `رقم جواز السفر ${i}`;
-        passportInput.required = true;
-        passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px;";
+    randomGirlsSelect.addEventListener("change", (event) => {
+        const selectedValue = parseInt(event.target.value, 10);
 
+        // Clear previous inputs
+        randomGirlsInputsContainer.innerHTML = "";
 
-  
-        inputWrapper.appendChild(input);
-        inputWrapper.appendChild(passportInput);
-        boy.appendChild(inputWrapper);
-      }
+        // Generate new inputs based on the selected value
+        for (let i = 1; i <= selectedValue; i++) {
+            const inputWrapper = document.createElement("div");
+            inputWrapper.className = "form-group";
+
+            // Name Input
+            const nameLabel = document.createElement("label");
+            nameLabel.innerText = `اسم البنت ${i} ثلاثي`;
+            nameLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.name = `random-girl-${i}-name`;
+            nameInput.required = true;
+            nameInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Passport Input
+            const passportLabel = document.createElement("label");
+            passportLabel.innerText = `رقم جواز السفر ${i}`;
+            passportLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const passportInput = document.createElement("input");
+            passportInput.type = "text";
+            passportInput.name = `random-girl-${i}-passport`;
+            passportInput.required = true;
+            passportInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Date of Birth Input
+            const dobLabel = document.createElement("label");
+            dobLabel.innerText = `تاريخ الميلاد ${i}`;
+            dobLabel.style = "font-size: 14px; color: #333; margin-bottom: 5px; display: block;";
+
+            const dobInput = document.createElement("input");
+            dobInput.type = "date";
+            dobInput.name = `random-girl-${i}-dob`;
+            dobInput.required = true;
+            dobInput.style = "width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;";
+
+            // Append elements to wrapper
+            inputWrapper.appendChild(nameLabel);
+            inputWrapper.appendChild(nameInput);
+            inputWrapper.appendChild(passportLabel);
+            inputWrapper.appendChild(passportInput);
+            inputWrapper.appendChild(dobLabel);
+            inputWrapper.appendChild(dobInput);
+
+            // Append wrapper to container
+            randomGirlsInputsContainer.appendChild(inputWrapper);
+        }
     });
-  </script>
+</script>
+
 
 
   
@@ -629,26 +812,90 @@
   
 
 
+<!-- Family Conditions -->
+<div class="form-group">
+    <label>هل يوجد أطفال أقل من سنتين؟</label>
+    <div class="radio-group" style="margin-bottom: 20px; display: flex; gap: 15px;">
+        <label style="display: flex; align-items: center;">
+            <input type="radio" name="underTwo" value="yes" onclick="handleUnderTwo(true)" style="margin-left: 5px;"> نعم
+        </label>
+        <label style="display: flex; align-items: center;">
+            <input type="radio" name="underTwo" value="no" onclick="handleUnderTwo(false)" style="margin-left: 5px;"> لا
+        </label>
+    </div>
+</div>
 
-        <!-- Family Conditions -->
-        <div class="form-group">
-            <label>هل يوجد أطفال أقل من سنتين؟</label>
-            <div class="radio-group">
-                <label><input type="radio" name="underTwo" value="yes" onclick="handleUnderTwo(true)"> نعم</label>
-                <label><input type="radio" name="underTwo" value="no" onclick="handleUnderTwo(false)"> لا</label>
-            </div>
+<div id="babyNeeds" style="display: none; margin-top: 20px;">
+    <div class="form-group" style="margin-bottom: 15px;">
+        <label for="diapers" style="font-weight: bold;">هل يلزم حفاضات؟</label>
+        <div style="margin-top: 10px;">
+            <input type="checkbox" id="diapers" name="diapers" value="yes" style="width: 20px; height: 20px; accent-color: green;">
         </div>
+    </div>
+    <div class="form-group">
+        <label for="milk" style="font-weight: bold;">هل يلزم حليب أطفال؟</label>
+        <div style="margin-top: 10px;">
+            <input type="checkbox" id="milk" name="milk" value="yes" style="width: 20px; height: 20px; accent-color: green;">
+        </div>
+    </div>
+</div>
 
-        <div class="hidden" id="babyNeeds">
-            <div class="form-group">
-                <label for="diapers">هل يلزم حفاضات؟</label>
-                <input type="text" id="diapers" name="diapers" placeholder="كمية الحفاضات المطلوبة">
-            </div>
-            <div class="form-group">
-                <label for="milk">هل يلزم حليب أطفال؟</label>
-                <input type="text" id="milk" name="milk" placeholder="كمية الحليب المطلوبة">
-            </div>
-        </div>
+
+
+
+
+<style>
+    /* Styling for checkbox cards */
+    .checkbox-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 120px;
+        text-align: center;
+        background-color: #f9f9f9;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .checkbox-card:hover {
+        background-color: #e6f7e6;
+        border-color: #85d085;
+    }
+
+    .checkbox-card input[type="checkbox"] {
+        margin-bottom: 10px;
+        width: 18px;
+        height: 18px;
+        accent-color: green;
+    }
+
+    .checkbox-card label {
+        font-size: 14px;
+        color: #333;
+    }
+</style>
+
+<script>
+    function handleUnderTwo(hasChildrenUnderTwo) {
+        const babyNeedsDiv = document.getElementById("babyNeeds");
+
+        if (hasChildrenUnderTwo) {
+            babyNeedsDiv.style.display = "block";
+        } else {
+            babyNeedsDiv.style.display = "none";
+
+            // Uncheck the checkboxes if "No" is selected
+            document.getElementById("diapers").checked = false;
+            document.getElementById("milk").checked = false;
+        }
+    }
+</script>
+
+
 
         <div class="form-footer">
             <button type="submit">إرسال</button>
@@ -695,10 +942,35 @@
       talentOptions.classList.toggle('hidden', !hasTalents);
     }
 
-    function handleUnderTwo(hasUnderTwo) {
-        const babyNeeds = document.getElementById("babyNeeds");
-        babyNeeds.classList.toggle("hidden", !hasUnderTwo);
+    function handleUnderTwo(hasChildrenUnderTwo) {
+    const babyNeedsDiv = document.getElementById("babyNeeds");
+
+    if (hasChildrenUnderTwo) {
+        babyNeedsDiv.style.display = "block";
+    } else {
+        babyNeedsDiv.style.display = "none";
+
+        // Uncheck the checkboxes if "No" is selected
+        document.getElementById("diapers").checked = false;
+        document.getElementById("milk").checked = false;
     }
+}
+
+
+
+    function handleGovernorateChange(value) {
+    const otherGovernorateContainer = document.getElementById("other-governorate-container");
+    const otherGovernorateInput = document.getElementById("other-governorate");
+
+    if (value === "أخرى") {
+        otherGovernorateContainer.style.display = "block";
+        otherGovernorateInput.setAttribute("required", "true");
+    } else {
+        otherGovernorateContainer.style.display = "none";
+        otherGovernorateInput.removeAttribute("required");
+        otherGovernorateInput.value = ""; // Clear the input if not "أخرى"
+    }
+}
 
 
 
