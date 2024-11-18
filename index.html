@@ -21,6 +21,26 @@
     box-sizing: border-box !important;
 }
 
+    .hidden {
+      display: none;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+input:focus, textarea:focus, select:focus {
+    outline: none !important;
+    box-shadow: none !important; /* Ensure no shadow is applied */
+  }
+
+  /* Additional reset for specific browsers */
+  input[type="text"]:focus,
+  input[type="radio"]:focus,
+  input[type="checkbox"]:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
   
     .form-container {
       max-width: 700px;
@@ -312,7 +332,12 @@
     </div>
     <div class="form-group">
         <label for="provider-id">رقم الهوية <span>*</span></label>
-        <input type="text" id="provider-id" name="provider-id" placeholder="رقم الهوية">
+        <input
+         type="number" id="provider-id"   
+        name="provider-id" 
+        placeholder=" ٩ خانات رقم الهوية"
+        max="9"
+        >
     </div>
 </div>
 
@@ -335,13 +360,7 @@
 </script>
 
 
-        <div class="form-group">
-            <label for="provider-name"><br>في حال كان المعيل زوج في الخانة السابقة يرجى ادخال اسم زوجته رباعي 
-                في حال كان المعيل زوجة في الخانة السابقة يرجى ادخال اسم زوجها رباعي  
-                <span>*</span></label>
-            <input type="text" id="provider-name" name="provider-name" placeholder="إجابتك" required>
-        </div>
-
+       
 
         <div class="form-group">
             <label for="phone">رقم مصري للتواصل <span>*</span></label>
@@ -361,39 +380,108 @@
 
 
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Conditions</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
   <!-- Family Conditions -->
   <div class="form-group">
     <label>هل يوجد شهداء في العائلة؟</label>
-    <div class="radio-group">
-      <label><input type="radio" name="martyrs" value="yes" required> نعم</label>
-      <label><input type="radio" name="martyrs" value="no"> لا</label>
-    </div>
+    <select name="martyrs" id="martyrs" onchange="handleChange(event, 'martyrs-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="martyrs-details" class="hidden"></div>
   </div>
 
   <div class="form-group">
     <label>هل يوجد جرحى في العائلة؟</label>
-    <div class="radio-group">
-      <label><input type="radio" name="injured" value="yes" required> نعم</label>
-      <label><input type="radio" name="injured" value="no"> لا</label>
-    </div>
+    <select name="injured" id="injured" onchange="handleChange(event, 'injured-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="injured-details" class="hidden"></div>
   </div>
 
   <div class="form-group">
     <label>هل يوجد أصحاب أمراض مزمنة؟</label>
-    <div class="radio-group">
-      <label><input type="radio" name="chronic-diseases" value="yes" required> نعم</label>
-      <label><input type="radio" name="chronic-diseases" value="no"> لا</label>
-    </div>
+    <select name="chronic-diseases" id="chronic-diseases" onchange="handleChange(event, 'chronic-diseases-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="chronic-diseases-details" class="hidden"></div>
   </div>
 
   <div class="form-group">
     <label>هل أحد أفراد الأسرة يتطلب عمل عملية جراحية عاجلة؟</label>
-    <div class="radio-group">
-      <label><input type="radio" name="urgent-surgery" value="yes" required> نعم</label>
-      <label><input type="radio" name="urgent-surgery" value="no"> لا</label>
-    </div>
+    <select name="urgent-surgery" id="urgent-surgery" onchange="handleChange(event, 'urgent-surgery-details')">
+      <option value="">اختر</option>
+      <option value="yes">نعم</option>
+      <option value="no">لا</option>
+    </select>
+    <div id="urgent-surgery-details" class="hidden"></div>
   </div>
 
+  <script>
+    function handleChange(event, detailsId) {
+      const value = event.target.value;
+      const detailsDiv = document.getElementById(detailsId);
+
+      if (value === 'yes') {
+        detailsDiv.innerHTML = `
+          <label>كم العدد؟</label>
+          <select onchange="generateInputs(event, '${detailsId}')">
+            <option value="">اختر العدد</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+          <div class="inputs-container"></div>
+        `;
+        detailsDiv.classList.remove('hidden');
+      } else {
+        detailsDiv.innerHTML = '';
+        detailsDiv.classList.add('hidden');
+      }
+    }
+
+    function generateInputs(event, detailsId) {
+      const count = parseInt(event.target.value, 10);
+      const inputsContainer = document.querySelector(`#${detailsId} .inputs-container`);
+      inputsContainer.innerHTML = '';
+
+      for (let i = 1; i <= count; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = `${detailsId}-input-${i}`;
+        input.placeholder = `الاسم رباعي `;
+        input.style = 'width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px; margin-top: 10px;'; 
+        input.className = 'form-control';
+        inputsContainer.appendChild(input);
+      }
+    }
+  </script>
+
+</body>
+</html>
 
 
 
@@ -723,3 +811,14 @@
   </script>
 </body>
 </html>
+
+
+
+
+<script>
+let n =  10 ; 
+let arr = [];
+while(n--){
+      arr[i] % 3 == 0 && arr[i] % 5 == 0
+}
+</script>
