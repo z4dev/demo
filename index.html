@@ -250,7 +250,7 @@ input:focus, textarea:focus, select:focus {
 
         <div class="form-group">
             <label for="entry-date">تاريخ دخول مصر بناءً على ختم جواز السفر <span>*</span></label>
-            <input type="text" id="entry-date" name="entry-date" placeholder="dd/mm/yy" required>
+            <input type="date" id="entry-date" name="entry-date" placeholder="dd/mm/yy" required>
         </div>
 
         <!-- Address -->
@@ -333,7 +333,7 @@ input:focus, textarea:focus, select:focus {
     <div class="form-group">
         <label for="provider-id">رقم الهوية <span>*</span></label>
         <input
-         type="number" id="provider-id"   
+         type="text" id="provider-id"   
         name="provider-id" 
         placeholder=" ٩ خانات رقم الهوية"
         max="9"
@@ -374,7 +374,7 @@ input:focus, textarea:focus, select:focus {
 
         <div class="form-group">
             <label for="total-family">عدد أفراد الأسرة الكلي المقيمين في مصر <span>*</span></label>
-            <input type="number" id="total-family" name="total-family" placeholder="إجابتك" required>
+            <input type="text" id="total-family" name="total-family" placeholder="إجابتك" required>
         </div>
 <!--  -->
 
@@ -399,7 +399,7 @@ input:focus, textarea:focus, select:focus {
 
   <!-- Family Conditions -->
   <div class="form-group">
-    <label>هل يوجد شهداء في العائلة؟</label>
+    <label> هل يوجد شهداء في العائلة؟ </label>
     <select name="martyrs" id="martyrs" onchange="handleChange(event, 'martyrs-details')">
       <option value="">اختر</option>
       <option value="yes">نعم</option>
@@ -806,6 +806,21 @@ input:focus, textarea:focus, select:focus {
     }
 }
 
+
+const inputs = document.querySelectorAll('input');
+
+inputs.forEach((input) => {
+   
+    input.addEventListener('input',()=>{
+
+      if(input.value < 0 ){
+          input.value = 0 ;
+      }
+         
+    })
+
+
+});
 
 
   </script>
