@@ -1,3 +1,12 @@
+
+
+
+
+<!-- TODO , ID verificiation  -->
+
+
+
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -293,6 +302,7 @@ input:focus, textarea:focus, select:focus {
               radio.addEventListener('change', function () {
                 if (this.value === 'أخرى') {
                   otherGovernorateContainer.style.display = 'block'; // Show the input
+                  let input = 
                   otherGovernorateInput.setAttribute('required', 'required');
                 } else {
                   otherGovernorateContainer.style.display = 'none'; // Hide the input
@@ -334,9 +344,9 @@ input:focus, textarea:focus, select:focus {
         <label for="provider-id">رقم الهوية <span>*</span></label>
         <input
          type="text" id="provider-id"   
-        name="provider-id" 
-        placeholder=" ٩ خانات رقم الهوية"
-        max="9"
+         name="provider-id" 
+         placeholder=" ٩ خانات رقم الهوية"
+         
         >
     </div>
 </div>
@@ -349,8 +359,21 @@ input:focus, textarea:focus, select:focus {
 
         if (providerType === "other") {
             otherInfoDiv.style.display = "block";
-            document.getElementById("provider-name").setAttribute("required", "true");
-            document.getElementById("provider-id").setAttribute("required", "true");
+            let name = document.getElementById("provider-name")
+            if(!name.value){
+                name.style.borderColor = 'red';
+            }
+            let id = document.getElementById("provider-id")
+            if(!id.value){
+                id.style.borderColor = 'red';
+            }
+
+            if(id.value.length < 9 || id.value.length > 9){
+                id.style.borderColor = 'red';
+                alert("الرقم الذي أدخلته غير صحيح")
+            }
+          
+
         } else {
             otherInfoDiv.style.display = "none";
             document.getElementById("provider-name").removeAttribute("required");
@@ -716,8 +739,32 @@ input:focus, textarea:focus, select:focus {
 
 
 <script>
+
+document.getElementById('familyForm').addEventListener('submit',async (event)=>{
+  const formData = new FormData(this);
+  event.preventDefault();
+  const providerType = document.querySelector('input[name="provider-type"]:checked')?.value;
+   if(providerType == 'other'){
+    const providerNameInput = document.getElementById("provider-name");
+    const providerIdInput = document.getElementById("provider-id");
+
+    if(!providerNameInput.value){
+      providerNameInput.style.borderColor = 'red';
+    }
+    if(!providerIdInput.value){
+      providerIdInput.style.borderColor = 'red';
+    }
+
+   }
+  
+
+})
+
   document.getElementById('familyForm').addEventListener('submit', async function (event) {
+
       event.preventDefault(); // Prevent default form submission behavior
+
+
 
       // Collect form data
       const formData = new FormData(this);
@@ -1323,13 +1370,23 @@ if (talentsExists && talentsDetails.length === 0) {
     const otherGovernorateInput = document.getElementById("other-governorate");
 
     if (value === "أخرى") {
-        otherGovernorateContainer.style.display = "block";
+        otherGovernorateContainer.style.display = "block";        
         otherGovernorateInput.setAttribute("required", "true");
+        if(otherGovernorateInput.value.trim() === "") {
+            otherGovernorateInput.focus();
+            otherGovernorateInput.style.borderColor = 'red';
+
+        }
+        else if(otherGovernorateInput.value.trim() !== "") {
+            otherGovernorateInput.style.borderColor = '';
+        }
+       
     } else {
         otherGovernorateContainer.style.display = "none";
         otherGovernorateInput.removeAttribute("required");
         otherGovernorateInput.value = ""; // Clear the input if not "أخرى"
     }
+
 }
 
 
